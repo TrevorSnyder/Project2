@@ -12,7 +12,9 @@ class LinkedList
         ~LinkedList();
         void appendNode(T value);
         void insertAtPosition(T value, int position);
-        
+        void prependNode(T value);
+        void deleteNodeAtPosition(int position);
+        void displayList() const;
     private:
         struct ListNode
         {
