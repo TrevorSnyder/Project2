@@ -26,7 +26,7 @@ class Task
             os << "\nTask Name: " << t.taskName;
 
             os << "\nUrgency: ";
-            if(t.urgentcy = true)
+            if(t.urgentcy == true)
             {
                 os << "Urgent\n";
             }
@@ -64,6 +64,18 @@ class Task
             }
         }
 
+        bool operator<(const Task& t)
+        {
+            if(this->time < t.time)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         Task addTask()
         {
             string nameOfTask;
@@ -78,7 +90,7 @@ class Task
             cout << "Is the task urgernt(y/n): ";
             cin >> urgentChar;
 
-            cout << "Task Completion Time (mins): ";
+            cout << "Task Completion Time (mins) - Enter Positive Integer: ";
             cin >> taskCompletionTime;
 
             if(urgentChar == 'y')

@@ -16,11 +16,14 @@ LinkedList<T>::~LinkedList()
 {
     ListNode* ptr = new ListNode();
     ptr = head;
+    int counter = 1;
 
     while(ptr)
     {
+        cout << "Deleting Task " << counter << endl;
         delete ptr;
         ptr = ptr->next;
+        counter++;
     }
 }
 
@@ -31,11 +34,16 @@ void LinkedList<T>::appendNode(T value1)
     if(head == NULL)
     {
         head = newNode;
-        tail = newNode;
+        return;
     }
 
-    tail->next = newNode;
-    tail = newNode;
+    ListNode* tempPtr = head;
+    while(tempPtr->next != NULL)
+    {
+        tempPtr = tempPtr->next;
+    }
+
+    tempPtr->next = newNode;
 }
 
 template <typename T>
@@ -103,13 +111,13 @@ void LinkedList<T>::deleteNodeAtPosition(int position)
         return;
     }
 
-    if(position < 0)
+    if(position < 1)
     {
         cout << "Position must be greater than or equal to 0";
     }
 
 
-    if(position == 0)
+    if(position == 1)
     {
         ListNode* ptr = new ListNode();
         ptr = head;
@@ -146,10 +154,55 @@ void LinkedList<T>::displayList() const
 	while(ptr)
 	{
 		
-		cout << "-----Node " << number << endl;
+		cout << "--Task " << number;
 		cout << ptr->value << endl;
 		ptr = ptr->next;
 		number++;
 	}
 }
 
+template<typename T>
+void LinkedList<T>::sortList()
+{
+    if (!head || !head->next) //case if list is empty/has 1 element
+    {
+        return;
+    }
+
+    quickSort(head, nullptr); //sorting starts at head
+}
+
+template<typename T>
+void LinkedList<T>::quickSort(ListNode* low, ListNode* high)
+{
+    if (low != high)
+    {
+        ListNode* pivotNode = partition(low, high);
+        quickSort(low, pivotNode); 
+        if (pivotNode != nullptr && pivotNode->next != nullptr)
+        {
+            quickSort(pivotNode->next, high);
+        }
+    }
+}
+
+template<typename T>
+typename LinkedList<T>::ListNode* LinkedList<T>::partition(ListNode* low, ListNode* high)
+{
+    T pivot = low->value; //first node used as pivot
+    ListNode* i = low;
+    ListNode* h = low->next;
+
+    while (h != high)
+    {
+        if (h->value < pivot)
+        {
+            i = i->next;
+            swap(i->value, h->value);
+        }
+        
+        h = h->next;
+    }
+    swap(low->value, i->value);
+    return i;
+}

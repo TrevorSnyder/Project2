@@ -15,6 +15,10 @@ class LinkedList
         void prependNode(T value);
         void deleteNodeAtPosition(int position);
         void displayList() const;
+        void sortList();
+
+        
+
     private:
         struct ListNode
         {
@@ -25,6 +29,8 @@ class LinkedList
 
         ListNode* head;
         ListNode* tail;
+        void quickSort(ListNode* low, ListNode* high);
+        ListNode* partition(ListNode* low, ListNode* high);
 };
 
 
